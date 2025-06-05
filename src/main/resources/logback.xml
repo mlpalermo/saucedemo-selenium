@@ -1,0 +1,43 @@
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="logback.xsd">
+
+    <!-- Load log level from config.properties with a default value of DEBUG -->
+    <property name="LOG_LEVEL" value="${logLevel:-INFO}"/>
+
+    <!-- Define a variable for the log path -->
+    <property name="LOG_PATH" value="./logs/"/>
+
+    <!-- Automatically create the logs directory if it doesn't exist -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- File location for logs -->
+        <file>${LOG_PATH}/application.log</file>
+        
+        <!-- Rolling policy to manage log files -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Log file rotation: one file per day -->
+            <fileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep logs for 30 days -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <!-- Log pattern format -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Console Appender for displaying logs in the console -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="${LOG_LEVEL}">
+        <!-- Console output -->
+        <appender-ref ref="CONSOLE"/>
+        <!-- File output -->
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

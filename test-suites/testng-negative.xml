@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="NegativeSuite" parallel="classes" thread-count="2">
+    <listeners>
+        <listener class-name="com.saucedemo.utils.TestListener" />
+        <listener class-name="com.saucedemo.utils.RetryListener" />
+    </listeners>
+    <test name="NegativeTests">
+        <groups>
+            <run>
+                <include name="negative" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.saucedemo.tests.LoginTest" />
+            <class name="com.saucedemo.tests.CheckoutTest" />
+        </classes>
+    </test>
+</suite>
+
+
+
